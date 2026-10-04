@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CyberShield AI — App Map</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #10253f;
+      background: #f2f6fb;
+      line-height: 1.55;
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(1080px, calc(100% - 2rem)); margin: 2rem auto 4rem; }
+    header, section, footer { background: #fff; border: 1px solid #dbe5f0; border-radius: 16px; }
+    header { padding: clamp(1.4rem, 4vw, 2.6rem); color: #fff; background: #102b4e; }
+    header p { max-width: 68ch; color: #d6e8fa; }
+    .eyebrow { color: #8bdcf2; font-size: .8rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+    h1 { margin: .4rem 0; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; }
+    h2 { margin-top: 0; font-size: 1.35rem; }
+    h3 { margin: 0 0 .35rem; font-size: 1rem; }
+    section { margin-top: 1rem; padding: clamp(1.1rem, 3vw, 1.7rem); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    code { color: #123e6a; background: #edf4fc; padding: .08rem .28rem; border-radius: 4px; overflow-wrap: anywhere; }
+    .source { color: #c9d8e8; font-size: .9rem; }
+    .scroll { overflow-x: auto; }
+    svg { display: block; width: 100%; min-width: 720px; height: auto; }
+    .route { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); counter-reset: stop; }
+    .stop, .pointer { padding: 1rem; border: 1px solid #dbe5f0; border-radius: 12px; background: #f9fbfe; }
+    .stop::before { counter-increment: stop; content: "Stop " counter(stop); display: block; margin-bottom: .5rem; color: #086a91; font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    .muted { color: #52677f; }
+    .pointers { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .practice { border-left: 4px solid #11a6c8; padding: .75rem 1rem; background: #effaff; }
+    footer { margin-top: 1rem; padding: 1rem 1.4rem; color: #425a73; font-size: .9rem; }
+    a { color: #075e91; text-underline-offset: .18em; }
+    a:focus-visible { outline: 3px solid #00a7cf; outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+    @media print { body { background: white; } main { width: 100%; margin: 0; } header, section, footer { break-inside: avoid; box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Build With AI · code tour reference</p>
+      <h1>CyberShield AI</h1>
+      <p>A local assessment that turns a small-business owner’s answers into a transparent score, ordered findings, and practical risk-linked actions. Django owns the rules and all displayed guidance; AI can select only approved wording styles.</p>
+      <p class="source">Source code snapshot: commit <code>2294d67</code>. This map is a reference to that code and may drift after later edits.</p>
+    </header>
+
+    <section aria-labelledby="flow-title">
+      <h2 id="flow-title">One answer through the app</h2>
+      <div class="scroll">
+        <svg viewBox="0 0 940 180" role="img" aria-labelledby="flow-svg-title flow-svg-desc">
+          <title id="flow-svg-title">Assessment answer to action card</title>
+          <desc id="flow-svg-desc">The owner answers a question. Django calculates the score and finding, selects the linked action, and the browser displays a fixed-copy action card. Optional AI selects a permitted wording style only.</desc>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5c7896"></path></marker>
+          </defs>
+          <g fill="#f5fbff" stroke="#8db4d2" stroke-width="2">
+            <rect x="12" y="35" width="190" height="92" rx="14"></rect>
+            <rect x="260" y="35" width="205" height="92" rx="14"></rect>
+            <rect x="523" y="35" width="178" height="92" rx="14"></rect>
+            <rect x="760" y="35" width="168" height="92" rx="14"></rect>
+          </g>
+          <g fill="#10253f" font-family="system-ui, sans-serif" text-anchor="middle">
+            <text x="107" y="70" font-size="15" font-weight="700">Owner answers</text>
+            <text x="107" y="96" font-size="13">Backups = No</text>
+            <text x="362" y="70" font-size="15" font-weight="700">Django rules</text>
+            <text x="362" y="96" font-size="13">score + finding + order</text>
+            <text x="612" y="70" font-size="15" font-weight="700">Action catalog</text>
+            <text x="612" y="96" font-size="13">backups-recovery</text>
+            <text x="844" y="70" font-size="15" font-weight="700">Action card</text>
+            <text x="844" y="96" font-size="13">fixed server copy</text>
+          </g>
+          <g fill="none" stroke="#5c7896" stroke-width="2.5" marker-end="url(#arrow)">
+            <path d="M205 81 H250"></path><path d="M468 81 H513"></path><path d="M704 81 H750"></path>
+          </g>
+          <text x="612" y="158" fill="#087998" font-family="system-ui, sans-serif" font-size="13" text-anchor="middle">Optional AI picks approved styles; it supplies no displayed prose</text>
+        </svg>
+      </div>
+    </section>
+
+    <section aria-labelledby="route-title">
+      <h2 id="route-title">Three-stop code route</h2>
+      <p class="muted">Use the approved Backups = No example. Follow its fixed action ID from the question catalog to the card shown in the browser.</p>
+      <div class="route">
+        <article class="stop">
+          <h3>Define the answer and impact</h3>
+          <p><code>assessment/catalog.py</code> · <code>AREAS</code></p>
+          <p>Find the Backups entry. It records the question, high-impact classification, and remediation/verification action IDs.</p>
+        </article>
+        <article class="stop">
+          <h3>Calculate the finding</h3>
+          <p><code>assessment/rules.py</code> · <code>_finding_for()</code>, <code>calculate_assessment()</code></p>
+          <p>A No contributes zero points for that area and creates a confirmed finding. Django sorts findings with the documented priority and tie-break rules.</p>
+        </article>
+        <article class="stop">
+          <h3>Select and display the action</h3>
+          <p><code>assessment/guidance/actions.py</code> · <code>select_actions()</code><br><code>static/assessment/js/app.js</code> · <code>renderAction()</code></p>
+          <p>The finding selects <code>backups-recovery</code>; the browser renders its What, Why, and How fields using text nodes.</p>
+        </article>
+      </div>
+      <p class="muted">At the request boundary, <code>assessment/views.py</code> · <code>guidance()</code> recomputes the result from the eight answers. <code>assessment/guidance/service.py</code> validates optional style IDs and otherwise returns the same rules-based plan.</p>
+    </section>
+
+    <section aria-labelledby="change-title">
+      <h2 id="change-title">To change this, start here</h2>
+      <div class="pointers">
+        <div class="pointer"><strong>Question text, area order, impact:</strong> <code>assessment/catalog.py</code>, <code>AREAS</code>.</div>
+        <div class="pointer"><strong>Points, finding certainty, priority order:</strong> <code>assessment/catalog.py</code> and <code>assessment/rules.py</code>.</div>
+        <div class="pointer"><strong>Risk-linked and preventive action wording:</strong> <code>assessment/guidance/actions.py</code>, <code>ACTION_CATALOG</code> and <code>PREVENTIVE_ACTIONS</code>.</div>
+        <div class="pointer"><strong>Dashboard/action-plan presentation:</strong> <code>static/assessment/js/app.js</code> and <code>static/assessment/css/app.css</code>.</div>
+        <div class="pointer"><strong>AI output boundary and fixed wording:</strong> <code>assessment/guidance/openai_adapter.py</code> and <code>assessment/guidance/service.py</code>.</div>
+      </div>
+    </section>
+
+    <section aria-labelledby="practice-title">
+      <h2 id="practice-title">A practice to reuse</h2>
+      <div class="practice"><strong>Make a product rule observable before adding AI.</strong> The PRD fixes the point values and impact-based priority rules; <code>calculate_assessment()</code> implements them deterministically, and fake-adapter checks show invalid model output falls back without changing results. On another project, define a few sample inputs and expected outcomes before connecting a generative service.</div>
+    </section>
+
+    <footer>
+      <strong>Run locally:</strong> in PowerShell, from the project folder run <code>py -3.14 -m venv .venv</code>, then <code>.\.venv\Scripts\python.exe -m pip install -r requirements.txt</code> and <code>.\.venv\Scripts\python.exe manage.py runserver</code>. Open <code>http://127.0.0.1:8000/</code>. No database or API key is required for the rules-based flow. See <code>README.md</code> for setup details.
+    </footer>
+  </main>
+</body>
+</html>

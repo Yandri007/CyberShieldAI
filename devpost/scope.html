@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Visual scope for the CyberShield AI hackathon proof of concept.">
+  <title>CyberShield AI — Scope</title>
+  <style>
+    :root { color-scheme: light; --ink:#142d3a; --muted:#526976; --paper:#f4f7f4; --card:#fff; --line:#d7e2dc; --teal:#087e79; --teal-light:#e3f4ef; --amber:#e9b45e; --amber-light:#fff4df; --rose:#a54e55; --shadow:0 18px 54px rgba(20,45,58,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.6 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(1080px,calc(100% - 36px)); margin:0 auto; padding:48px 0 72px; }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:26px; }
+    .eyebrow,.kicker { color:var(--teal); font-size:.76rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    .status { border:1px solid #b9ded4; border-radius:999px; background:var(--teal-light); color:#155b53; padding:5px 12px; font-size:.8rem; font-weight:750; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { max-width:760px; margin-bottom:12px; font-size:clamp(2.5rem,7vw,4.65rem); letter-spacing:-.055em; line-height:1.02; }
+    .lede { max-width:680px; color:var(--muted); font-size:clamp(1.08rem,2.2vw,1.3rem); }
+    .hero { padding:16px 0 36px; }
+    .panel { border:1px solid var(--line); border-radius:24px; background:var(--card); box-shadow:var(--shadow); }
+    .journey { padding:clamp(20px,4vw,38px); margin:6px 0 24px; }
+    .kicker { margin-bottom:5px; }
+    h2 { margin-bottom:8px; font-size:clamp(1.45rem,3vw,2rem); letter-spacing:-.03em; line-height:1.2; }
+    .subcopy { color:var(--muted); }
+    .diagram-wrap { overflow-x:auto; margin:24px -4px 10px; padding:4px; }
+    .diagram { display:block; width:100%; min-width:790px; height:auto; }
+    .diagram text { font-family:inherit; }
+    .moment { display:flex; gap:14px; align-items:flex-start; margin-top:18px; padding:16px 18px; border-radius:14px; background:var(--teal-light); color:#174b49; }
+    .moment strong { display:block; margin-bottom:2px; }
+    .moment p { margin:0; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin:24px 0; }
+    .card { padding:24px; border:1px solid var(--line); border-radius:20px; background:var(--card); }
+    .card h3 { margin-bottom:9px; font-size:1.1rem; }
+    .card p,.card li { color:var(--muted); }
+    .card p:last-child,.card ul:last-child { margin-bottom:0; }
+    .boundaries { margin-top:36px; }
+    .boundary-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:18px; }
+    details { min-width:0; border:1px solid var(--line); border-radius:18px; background:var(--card); overflow:hidden; }
+    details[open] { box-shadow:0 12px 32px rgba(20,45,58,.06); }
+    summary { display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; list-style:none; padding:18px 20px; font-weight:800; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:"+"; color:var(--muted); font-size:1.3rem; line-height:1; }
+    details[open] summary::after { content:"−"; }
+    .now summary { color:var(--teal); } .later summary { color:#8a641c; } .cut summary { color:var(--rose); }
+    .detail-body { padding:0 20px 20px; color:var(--muted); }
+    .detail-body ul { margin:0; padding-left:1.2rem; }
+    .detail-body li+li { margin-top:7px; }
+    .note { margin-top:26px; padding:18px 20px; border-left:4px solid var(--amber); border-radius:0 14px 14px 0; background:#fffaf0; color:#604b26; }
+    .note strong { color:var(--ink); }
+    footer { display:flex; justify-content:space-between; gap:18px; margin-top:42px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:.88rem; }
+    :focus-visible { outline:3px solid var(--amber); outline-offset:3px; }
+    @media (max-width:760px) { main { width:min(100% - 24px,620px); padding-top:28px; } .grid,.boundary-grid { grid-template-columns:1fr; } .journey { border-radius:18px; } footer { display:block; } footer span { display:block; margin-top:5px; } }
+    @media (prefers-reduced-motion:no-preference) { .card { transition:box-shadow .18s ease,transform .18s ease; } .card:hover { transform:translateY(-2px); box-shadow:var(--shadow); } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topline"><span class="eyebrow">Devpost Learn · Scope</span><span class="status">Approved scope</span></div>
+    <header class="hero">
+      <h1>CyberShield AI</h1>
+      <p class="lede">A polished, guided cybersecurity assessment that helps small-business owners understand their main risks and what to improve first.</p>
+    </header>
+
+    <section class="panel journey" aria-labelledby="journey-heading">
+      <p class="kicker">The one-minute proof</p>
+      <h2 id="journey-heading">A polished journey from answers to action</h2>
+      <p class="subcopy">Transparent rules determine the score and priorities. AI makes the findings easier to understand and act on.</p>
+      <div class="diagram-wrap" tabindex="0" aria-label="Scrollable user-flow diagram">
+        <svg class="diagram" viewBox="0 0 1050 230" role="img" aria-labelledby="flow-title flow-desc">
+          <title id="flow-title">CyberShield AI assessment flow</title>
+          <desc id="flow-desc">The owner answers concise questions. Transparent rules determine the score and risk priorities. A visual dashboard shows the top risks. AI explains those findings and provides three practical actions.</desc>
+          <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8ca69e"/></marker></defs>
+          <g fill="none" stroke="#8ca69e" stroke-width="2" marker-end="url(#arrow)"><path d="M184 101 H207"/><path d="M389 101 H412"/><path d="M594 101 H617"/><path d="M799 101 H822"/></g>
+          <g>
+            <rect x="8" y="43" width="176" height="116" rx="18" fill="#f2f6f3" stroke="#d7e2dc"/><circle cx="36" cy="70" r="15" fill="#dcece5"/><text x="36" y="75" text-anchor="middle" font-size="14" font-weight="800" fill="#087e79">1</text><text x="27" y="106" font-size="16" font-weight="750" fill="#142d3a">Owner answers</text><text x="27" y="130" font-size="13" fill="#526976">concise questions</text>
+            <rect x="213" y="43" width="176" height="116" rx="18" fill="#e3f4ef" stroke="#b9ded4"/><circle cx="241" cy="70" r="15" fill="#c8e7dc"/><text x="241" y="75" text-anchor="middle" font-size="14" font-weight="800" fill="#087e79">2</text><text x="232" y="106" font-size="16" font-weight="750" fill="#142d3a">Rules determine</text><text x="232" y="130" font-size="13" fill="#526976">score and priorities</text>
+            <rect x="418" y="43" width="176" height="116" rx="18" fill="#f2f6f3" stroke="#d7e2dc"/><circle cx="446" cy="70" r="15" fill="#dcece5"/><text x="446" y="75" text-anchor="middle" font-size="14" font-weight="800" fill="#087e79">3</text><text x="437" y="106" font-size="16" font-weight="750" fill="#142d3a">Visual dashboard</text><text x="437" y="130" font-size="13" fill="#526976">top risks stand out</text>
+            <rect x="623" y="43" width="176" height="116" rx="18" fill="#e3f4ef" stroke="#b9ded4"/><circle cx="651" cy="70" r="15" fill="#c8e7dc"/><text x="651" y="75" text-anchor="middle" font-size="14" font-weight="800" fill="#087e79">4</text><text x="642" y="106" font-size="16" font-weight="750" fill="#142d3a">AI explains</text><text x="642" y="130" font-size="13" fill="#526976">findings, not scores</text>
+            <rect x="828" y="43" width="214" height="116" rx="18" fill="#142d3a" stroke="#142d3a"/><circle cx="856" cy="70" r="15" fill="#e9b45e"/><text x="856" y="75" text-anchor="middle" font-size="14" font-weight="800" fill="#142d3a">5</text><text x="847" y="106" font-size="16" font-weight="750" fill="#ffffff">Three next actions</text><text x="847" y="130" font-size="13" fill="#d1e1dc">what · why · how to start</text>
+          </g>
+          <text x="525" y="204" text-anchor="middle" font-size="13" font-weight="700" fill="#526976">The owner leaves knowing what to work on first.</text>
+        </svg>
+      </div>
+      <div class="moment"><span aria-hidden="true">✦</span><p><strong>The key moment</strong>Cybersecurity feels understandable and the next step feels realistic, not overwhelming.</p></div>
+    </section>
+
+    <section class="grid" aria-label="Project identity and audience">
+      <article class="card"><p class="kicker">Distinctive idea</p><h3>Transparent structure, useful AI</h3><p>Rules determine the score, risks, and priorities. AI explains the results simply and creates practical recommendations grounded in the assessment.</p></article>
+      <article class="card"><p class="kicker">Who it's for</p><h3>A small-business owner or manager</h3><p>They use digital tools but do not have dedicated cybersecurity staff. CyberShield AI helps them see the most important risks and what to improve first.</p></article>
+      <article class="card"><p class="kicker">Feel</p><h3>Polished, simple, reassuring</h3><p>A clear cybersecurity assessment product, with a visual dashboard that makes high-priority risks easy to understand without a lot of reading.</p></article>
+      <article class="card"><p class="kicker">Why it matters</p><h3>Make practical security accessible</h3><p>Many small businesses rely on digital tools but lack dedicated cybersecurity staff to identify weaknesses and prioritize fixes. CyberShield AI aims to make risks understandable and next steps practical.</p></article>
+    </section>
+
+    <section class="boundaries" aria-labelledby="boundary-heading">
+      <p class="kicker">Keep the proof of concept focused</p><h2 id="boundary-heading">What belongs in this build?</h2><p class="subcopy">Open a section to see the approved boundary. Markdown remains the canonical plan.</p>
+      <div class="boundary-grid">
+        <details class="now" open><summary>Now · prove the core</summary><div class="detail-body"><ul><li>One end-to-end, self-reported assessment in a polished web experience.</li><li>Concise questions across enough areas to distinguish meaningful risks; exact count and coverage go in the PRD.</li><li>Transparent, rule-based score, risk identification, and priorities.</li><li>A visual dashboard that clearly surfaces the top risks.</li><li>AI explanations and recommendations grounded in assessment results; AI does not determine scores or priorities.</li><li>One complete journey demonstrable in about a minute.</li></ul></div></details>
+        <details class="later"><summary>Later · grow after the demo</summary><div class="detail-body"><ul><li>A broader SaaS product for small businesses, after the assessment-to-action-plan value is proven.</li></ul></div></details>
+        <details class="cut"><summary>Cut · keep this build small</summary><div class="detail-body"><ul><li>A complete cybersecurity platform or SaaS product; the hackathon version proves one journey within the 2–4-hour active-work target.</li><li>Automated system or network scanning and a full technical audit; this proof relies on the owner's answers.</li></ul></div></details>
+      </div>
+      <aside class="note"><strong>To settle in the PRD:</strong> question count and coverage, and the exact AI explanation and recommendation behavior. Keep the scoring methodology transparent and rule-based throughout.</aside>
+    </section>
+    <footer><strong>CyberShield AI · Approved scope</strong><span>Visual companion · Markdown is canonical · No external assets required</span></footer>
+  </main>
+</body>
+</html>

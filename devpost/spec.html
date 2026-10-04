@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>CyberShield AI — Technical Spec</title>
+  <style>
+    :root {
+      --navy:#10243b; --navy-2:#173652; --cyan:#0b91b5; --cyan-soft:#e5f7fb;
+      --ink:#172536; --muted:#607287; --line:#dbe4ec; --paper:#f3f7fa; --white:#fff;
+      --green:#167455; --amber:#9a5b08; --red:#b33a42;
+      --shadow:0 14px 42px rgba(16,36,59,.08);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.62 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    a { color:#087c9d; }
+    a:focus-visible,summary:focus-visible { outline:3px solid #41c9e9; outline-offset:3px; }
+    .top { color:#fff; background:radial-gradient(circle at 82% 0%,#235574,transparent 35%),linear-gradient(115deg,#10243b,#173652); padding:34px max(22px,calc((100vw - 1100px)/2)) 42px; }
+    .eyebrow { color:#a6e6f3; font-size:.8rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; }
+    h1 { margin:9px 0 10px; max-width:780px; font-size:clamp(2rem,5vw,3.5rem); line-height:1.08; letter-spacing:-.035em; }
+    .top p { max-width:800px; color:#deebf4; margin:0; font-size:1.08rem; }
+    .badge { display:inline-flex; align-items:center; gap:8px; margin-top:20px; padding:6px 11px; border:1px solid #6b98b2; border-radius:999px; color:#dbf3fa; font-size:.82rem; }
+    .badge i { width:8px; height:8px; border-radius:50%; background:#5ce0bd; }
+    nav { position:sticky; top:0; z-index:5; display:flex; gap:8px; overflow-x:auto; padding:12px max(14px,calc((100vw - 1100px)/2)); background:rgba(255,255,255,.96); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    nav a { flex:0 0 auto; text-decoration:none; color:#35516a; padding:7px 11px; border-radius:999px; font-size:.9rem; font-weight:700; }
+    nav a:hover { background:var(--cyan-soft); color:var(--navy); }
+    main { max-width:1100px; margin:auto; padding:24px 20px 70px; }
+    section { scroll-margin-top:72px; margin:22px 0; }
+    .panel { background:var(--white); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); padding:clamp(20px,3vw,32px); }
+    h2 { color:var(--navy); font-size:1.55rem; letter-spacing:-.02em; margin:0 0 12px; }
+    h3 { color:var(--navy); font-size:1.08rem; margin:0 0 5px; }
+    p { margin:.45rem 0 1rem; }
+    .lead { font-size:1.1rem; color:#314b62; }
+    .callout { background:#eef9fc; border-left:4px solid var(--cyan); padding:14px 17px; border-radius:0 12px 12px 0; margin:16px 0; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+    .card { background:#fbfdff; border:1px solid var(--line); border-radius:14px; padding:17px; }
+    .card p:last-child { margin-bottom:0; }
+    .small { color:var(--muted); font-size:.92rem; }
+    .flow { width:100%; height:auto; display:block; margin:10px auto 0; }
+    .journey { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-top:17px; }
+    details { border:1px solid var(--line); border-radius:13px; background:#fff; padding:13px 15px; }
+    details[open] { border-color:#9dd9e7; box-shadow:0 6px 18px rgba(11,145,181,.07); }
+    summary { cursor:pointer; list-style:none; font-weight:800; color:var(--navy); }
+    summary::-webkit-details-marker { display:none; }
+    summary:before { content:"＋"; display:inline-grid; place-items:center; width:23px; height:23px; margin-right:8px; border-radius:50%; color:#087c9d; background:var(--cyan-soft); }
+    details[open] summary:before { content:"−"; }
+    .tag { display:inline-block; border-radius:999px; padding:2px 9px; background:#edf3f7; color:#476176; font-size:.78rem; font-weight:800; }
+    .priority { color:var(--red); background:#fff0f1; }
+    .verify { color:var(--amber); background:#fff5df; }
+    .safe { color:var(--green); background:#e9f8f1; }
+    .filetree { overflow:auto; background:#10243b; color:#e5f2fa; border-radius:14px; padding:18px 20px; font:.9rem/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; }
+    pre { white-space:pre; margin:0; }
+    .steps { counter-reset:steps; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+    .step { counter-increment:steps; padding:14px; border-radius:12px; background:#f4f9fc; border:1px solid var(--line); }
+    .step:before { content:counter(steps); display:grid; place-items:center; width:27px; height:27px; margin-bottom:8px; border-radius:50%; color:#fff; background:var(--navy-2); font-weight:800; }
+    .cost { border-color:#f0d9ad; background:#fffbf2; }
+    .foot { text-align:center; color:var(--muted); font-size:.9rem; padding:25px 0 0; }
+    @media(max-width:600px) { .top { padding-top:27px; } main { padding-inline:13px; } .panel { border-radius:14px; } }
+    @media print { nav { position:static; flex-wrap:wrap; } body { background:#fff; } .panel { box-shadow:none; break-inside:avoid; } details:not([open])>*:not(summary) { display:block; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="eyebrow">Build With AI · Technical Blueprint</div>
+    <h1>CyberShield AI</h1>
+    <p>A local-first Django assessment that calculates risk with transparent rules, then asks OpenAI only to explain the actions the app has already chosen.</p>
+    <div class="badge"><i></i> Approved spec · 4-spec complete</div>
+  </header>
+
+  <nav aria-label="Specification sections">
+    <a href="#plain">Plain-language view</a>
+    <a href="#flow">Architecture</a>
+    <a href="#rules">Scoring rules</a>
+    <a href="#journey">User journey</a>
+    <a href="#components">Components</a>
+    <a href="#data">Data & privacy</a>
+    <a href="#run">Run locally</a>
+    <a href="#cost">API credits & cost</a>
+  </nav>
+
+  <main>
+    <section id="plain" class="panel">
+      <h2>How this works</h2>
+      <p class="lead">Think of Django as the app’s workshop: it receives the owner’s answers, applies the published scoring rules, and decides which action cards belong on the plan. The browser handles the question flow and display. OpenAI is a writing helper called only after Django has chosen the findings and actions.</p>
+      <div class="callout"><strong>Rules decide; AI explains.</strong> If OpenAI is unavailable or not configured, the score, risks, priorities, and predefined next steps still work.</div>
+      <p>Answers stay in browser memory for this visit and are not saved to a database. A refresh starts a new assessment. The OpenAI key stays in Django’s server environment and never goes to the browser.</p>
+    </section>
+
+    <section id="flow" class="panel">
+      <h2>System flow</h2>
+      <p class="small">The guidance request recalculates the canonical findings on the server. The browser cannot set the score, priority, ranking, or action mapping.</p>
+      <svg class="flow" viewBox="0 0 1000 335" role="img" aria-labelledby="flow-title flow-desc">
+        <title id="flow-title">CyberShield AI data flow</title>
+        <desc id="flow-desc">The browser sends answers to Django. Django validates and calculates findings and actions. On a guidance request it sends only structured context to OpenAI, validates the explanation, or returns the rules-based fallback.</desc>
+        <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#3b7792"/></marker></defs>
+        <rect x="20" y="88" width="215" height="150" rx="18" fill="#edf8fb" stroke="#65bfd2" stroke-width="2"/>
+        <text x="127" y="121" text-anchor="middle" font-size="19" font-weight="700" fill="#10243b">Browser</text>
+        <text x="127" y="152" text-anchor="middle" font-size="14" fill="#35516a">8 answers in memory</text>
+        <text x="127" y="178" text-anchor="middle" font-size="14" fill="#35516a">wizard + dashboard</text>
+        <text x="127" y="204" text-anchor="middle" font-size="14" fill="#35516a">no score calculations</text>
+        <rect x="292" y="52" width="370" height="222" rx="18" fill="#10243b"/>
+        <text x="477" y="87" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">Django server</text>
+        <rect x="320" y="106" width="147" height="59" rx="11" fill="#e7f7fb"/>
+        <text x="393" y="131" text-anchor="middle" font-size="14" font-weight="700" fill="#10243b">Validate answers</text>
+        <text x="393" y="151" text-anchor="middle" font-size="12" fill="#35516a">exact 8 allowed values</text>
+        <rect x="487" y="106" width="147" height="59" rx="11" fill="#e7f7fb"/>
+        <text x="560" y="131" text-anchor="middle" font-size="14" font-weight="700" fill="#10243b">Rules + actions</text>
+        <text x="560" y="151" text-anchor="middle" font-size="12" fill="#35516a">score · priority · order</text>
+        <rect x="350" y="190" width="253" height="55" rx="11" fill="#d8f4e9"/>
+        <text x="476" y="214" text-anchor="middle" font-size="14" font-weight="700" fill="#145a43">Fallback plan always ready</text>
+        <text x="476" y="233" text-anchor="middle" font-size="12" fill="#35685a">used on missing key or API failure</text>
+        <rect x="735" y="88" width="240" height="150" rx="18" fill="#fff8e9" stroke="#e9c16f" stroke-width="2"/>
+        <text x="855" y="121" text-anchor="middle" font-size="19" font-weight="700" fill="#10243b">OpenAI API</text>
+        <text x="855" y="152" text-anchor="middle" font-size="14" fill="#5f4c27">selected risk/action context</text>
+        <text x="855" y="178" text-anchor="middle" font-size="14" fill="#5f4c27">JSON: explanation + first step</text>
+        <text x="855" y="204" text-anchor="middle" font-size="14" fill="#5f4c27">key remains server-side</text>
+        <path d="M236 163 H282" stroke="#3b7792" stroke-width="3" marker-end="url(#arrow)"/>
+        <path d="M662 163 H725" stroke="#3b7792" stroke-width="3" marker-end="url(#arrow)"/>
+        <path d="M725 219 C700 307,285 307,236 220" fill="none" stroke="#0b91b5" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+        <text x="480" y="323" text-anchor="middle" font-size="13" fill="#35516a">validated guidance or fixed fallback returns to the browser</text>
+      </svg>
+      <div class="grid">
+        <div class="card"><span class="tag">Deterministic</span><h3>Score & rank</h3><p>Equal area weights, explicit uncertainty, high/moderate impact, and the approved fixed tie-break order.</p></div>
+        <div class="card"><span class="tag">Constrained AI</span><h3>Explain & personalize</h3><p>OpenAI can fill explanation and first-step text for server-selected action IDs only.</p></div>
+        <div class="card"><span class="tag safe">Always available</span><h3>Fallback plan</h3><p>Predefined actions preserve a useful result if the AI key, balance, network, or response is unavailable.</p></div>
+      </div>
+    </section>
+
+    <section id="rules" class="panel">
+      <h2>Transparent scoring and priorities</h2>
+      <div class="grid">
+        <div class="card"><span class="tag">Self-reported score</span><h3>Equal weights</h3><p>Yes = 12.5 points · Not sure = 6.25 · No = 0. Sum all eight areas for 0–100. This is not a technical measurement.</p></div>
+        <div class="card"><span class="tag safe">80–100</span><h3>Strong</h3><p>Most important controls appear to be in place, based on the answers provided.</p></div>
+        <div class="card"><span class="tag verify">50–79</span><h3>Needs Attention</h3><p>Meaningful gaps should be addressed.</p></div>
+        <div class="card"><span class="tag priority">0–49</span><h3>High Risk</h3><p>Several important controls appear to be missing or need urgent attention.</p></div>
+      </div>
+      <div class="callout"><strong>Finding priority is separate from score:</strong> No + high impact = high confirmed gap; No + moderate impact = medium confirmed gap. Not sure gets the same impact-based priority but is labeled for verification. Yes creates no finding.</div>
+      <p><strong>High impact:</strong> backups, passwords, MFA, and user access. <strong>Moderate impact:</strong> updates, Wi-Fi/network, device protection, and employee practices.</p>
+      <p class="small">Deterministic tie-break: higher priority first, confirmed No before Not sure at the same priority, then the fixed eight-area order from the PRD. The same answers always produce the same ordered findings.</p>
+      <div class="callout"><strong>AI cannot change assessment results.</strong> Python rules alone calculate the exact score (Yes 12.5, Not sure 6.25, No 0), severity, priority, order, and risk-to-action mapping. AI may explain only the actions Django selected; it cannot calculate scores, change severity, reorder priorities, or invent risks.</div>
+    </section>
+
+    <section id="journey" class="panel">
+      <h2>One assessment journey</h2>
+      <div class="journey">
+        <details open><summary>1 · Assess</summary><p>Landing page → eight guided questions. JavaScript keeps answers and handles Back/Next, progress, and unanswered-field feedback.</p><p class="small">PRD: Landing, Assessment, Guided Assessment · Files: index.html, app.js, app.css</p></details>
+        <details><summary>2 · Calculate</summary><p>Analyze My Security posts the eight choices to Django. Python validates answers, sums the score, creates findings, applies tie-breaks, and selects linked actions.</p><p class="small">PRD: Transparent Score and Risk Priorities · Files: views.py, catalog.py, rules.py</p></details>
+        <details><summary>3 · Understand</summary><p>The dashboard displays the self-reported score, status, all eight area states, prominent top risks, and the “not a technical measurement” note.</p><p class="small">PRD: Results Dashboard · Files: app.js, index.html, app.css</p></details>
+        <details><summary>4 · Get guidance</summary><p>Clicking Get AI Guidance makes Django recompute and freeze risk/action IDs before it calls the configured adapter.</p><p class="small">PRD: AI Guidance and Action Plan · Files: guidance/service.py, guidance/openai_adapter.py</p></details>
+        <details><summary>5 · Act</summary><p>AI selects only approved wording styles; Django renders action-card text from fixed, risk-linked copy. Preventive cards are labeled; no missing risk is invented.</p><p class="small">PRD: Results and Action Plan, AI Guidance and Fallback · Files: catalog.py, app.js</p></details>
+      </div>
+    </section>
+
+    <section id="components" class="panel">
+      <h2>Component map</h2>
+      <div class="grid">
+        <div class="card"><h3>Page and wizard</h3><p>Single Django template, plain JavaScript, custom CSS. Keeps the flow familiar and avoids a separate frontend build.</p><p class="small">templates/assessment/index.html · static/assessment/js/app.js · static/assessment/css/app.css</p></div>
+        <div class="card"><h3>Rules and catalog</h3><p>Fixed area IDs/order, question copy, impact, scoring, tie-breaks, fallback actions, and preventive options.</p><p class="small">assessment/catalog.py · assessment/rules.py</p></div>
+        <div class="card"><h3>JSON request views</h3><p>Same-origin POST endpoints validate all eight values, recalculate server-side, and return stable response shapes.</p><p class="small">assessment/views.py · assessment/urls.py</p></div>
+        <div class="card"><h3>Provider-neutral guidance</h3><p>One service owns the app’s guidance contract, output validation, missing-key handling, and fallback selection.</p><p class="small">assessment/guidance/service.py</p></div>
+        <div class="card"><h3>Initial OpenAI adapter</h3><p>Contains OpenAI SDK imports, Responses API details, model setting, and strict schema. The model returns only approved style IDs and selected action IDs; Django renders every displayed sentence. Other modules do not depend on OpenAI details.</p><p class="small">assessment/guidance/openai_adapter.py</p></div>
+        <div class="card"><h3>Django project</h3><p>URLs, settings, static/template config, and local environment loading. No account system or assessment database.</p><p class="small">cybershield/settings.py · cybershield/urls.py</p></div>
+      </div>
+    </section>
+
+    <section id="data" class="panel">
+      <h2>Data, trust, and boundaries</h2>
+      <div class="grid">
+        <div class="card"><h3>During the visit</h3><p>Answers, analysis, and guidance remain in browser memory. Refresh/close clears them. Django does not save assessments.</p></div>
+        <div class="card"><h3>On the server</h3><p>Django validates every request and recomputes the score, ordered findings, and selected actions. It ignores client-computed results.</p></div>
+        <div class="card"><h3>Sent to OpenAI</h3><p>Only categorical answers, rule-generated result context, and selected action descriptions. No business identity or free-text secrets are collected.</p></div>
+        <div class="card"><h3>Key and response retention</h3><p>The key is read by Django from local .env. The OpenAI request sets store=false; abuse-monitoring retention can still apply for up to 30 days.</p></div>
+      </div>
+      <div class="callout"><strong>Product boundary:</strong> self-reported controls only. No scanning, verification, accounts, saved assessment history, or invented risks.</div>
+      <div class="callout"><strong>Approved POC boundary:</strong> Django templates and vanilla JavaScript; answers/results held temporarily in browser memory only. No authentication, database, Supabase, or React unless a concrete approved PRD requirement makes one necessary. The provider-neutral Django guidance service owns the contract; OpenAI is replaceable and its API key stays in a server environment variable.</div>
+    </section>
+
+    <section id="run" class="panel">
+      <h2>Local setup and demo</h2>
+      <p>Windows PowerShell from the project folder:</p>
+      <div class="filetree"><pre>py -3.14 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+python manage.py runserver</pre></div>
+      <p>Use the installed Python 3.14.8 runtime with Django 5.2.8 or later in the 5.2 LTS series; Django 5.2.8 added Python 3.14 support. Open <strong>http://127.0.0.1:8000</strong>. Add a key only to the ignored .env file if you decide to enable live guidance. With no key, use the real rules-based fallback. No database migration or hosted service is required.</p>
+      <div class="steps">
+        <div class="step"><strong>Landing and Assess</strong><br>Show the product promise and answer the eight questions.</div>
+        <div class="step"><strong>Understand</strong><br>Show score meaning, area states, and first risks.</div>
+        <div class="step"><strong>Act</strong><br>Click guidance and show AI output or the labeled fallback plan.</div>
+      </div>
+      <p class="small">The recorded local flow is enough for the hackathon video. Deployment is optional after local completion.</p>
+    </section>
+
+    <section id="cost" class="panel cost">
+      <h2>API credits and cost</h2>
+      <p><strong>Current low-cost model for the spec:</strong> GPT-6 Luna is listed for $0.10 per million input tokens and $0.50 per million output tokens. Its API free tier is not supported, though your account may have promotional API credits. The app makes one bounded request only after the owner clicks for guidance.</p>
+      <p><strong>Check before paying:</strong> open the <a href="https://platform.openai.com/account/billing" target="_blank" rel="noreferrer">OpenAI API billing overview</a> for the correct organization and inspect the available credit balance. Free API credits, if present, are used before purchased credits. ChatGPT billing does not include API usage. If no credits are available, the current minimum initial prepaid purchase is $5; the app can remain in fallback mode without buying anything.</p>
+      <p><strong>Before a live demo:</strong> use a dedicated API project and set a project hard spend limit and alert. The hard cap may be enforced with a small delay, so check usage as well. Keep the API key in the server environment and never expose it in browser code or a public repository.</p>
+      <p class="small">Pricing, credits, model access, and billing screens can change. The account balance is not visible to this workspace and remains for you to check privately.</p>
+      <p><a href="https://developers.openai.com/api/docs/models/gpt-6-luna" target="_blank" rel="noreferrer">Model details</a> · <a href="https://developers.openai.com/api/docs/pricing" target="_blank" rel="noreferrer">Pricing</a> · <a href="https://help.openai.com/en/articles/8264644-setting-up-and-managing-prepaid-api-billing" target="_blank" rel="noreferrer">Prepaid billing</a> · <a href="https://developers.openai.com/api/docs/guides/spend-limits" target="_blank" rel="noreferrer">Spend limits</a></p>
+    </section>
+
+    <section class="panel">
+      <h2>Planned project files</h2>
+      <div class="filetree"><pre>CyberShieldAI/
+├── manage.py
+├── requirements.txt
+├── .env.example                 # empty safe-to-share settings template
+├── .gitignore                   # existing rules exclude .env
+├── cybershield/
+│   ├── __init__.py
+│   ├── settings.py              # Django, env, template/static settings
+│   ├── urls.py                  # root page and assessment endpoints
+│   ├── asgi.py
+│   └── wsgi.py
+├── assessment/
+│   ├── __init__.py
+│   ├── apps.py
+│   ├── catalog.py               # question, impact, action, fallback definitions
+│   ├── rules.py                 # validation, score, findings, stable order
+│   ├── views.py                 # page plus analyze/guidance JSON endpoints
+│   ├── urls.py
+│   └── guidance/
+│       ├── __init__.py
+│       ├── service.py           # provider-neutral interface and validation
+│       └── openai_adapter.py    # first provider implementation only
+├── templates/assessment/
+│   └── index.html
+├── static/assessment/
+│   ├── css/app.css
+│   └── js/app.js
+├── README.md                    # local setup and demo path
+└── devpost/
+    ├── learner-profile.md
+    ├── scope.md
+    ├── prd.md
+    ├── spec.md
+    └── spec.html</pre></div>
+    </section>
+
+    <section class="panel">
+      <h2>Approved decisions and remaining pre-spend check</h2>
+      <p>The approved architecture preserves the eight constraints: deterministic Python scoring and documented tie-breaks; AI limited to explanations for server-selected results; full rules-based fallback; server-only API key; provider-neutral guidance interface; approved Django templates plus vanilla JavaScript; no unnecessary auth/database/Supabase/React; and no permanent storage of assessment answers or business data. Python 3.14.8 is the selected runtime; Django 5.2.8 or later in the 5.2 LTS series supports it.</p>
+      <p>GPT-6 Luna is the initial low-cost model setting in the spec. Before enabling a paid API call, check the account-specific API credit balance and current model pricing. The balance is not visible to this workspace. Local build and fallback-mode demo do not require a key or purchase.</p>
+      <p><a href="spec.md">Open the canonical Markdown spec</a> · <a href="prd.html">Open the approved PRD</a></p>
+    </section>
+    <p class="foot">CyberShield AI · Approved Technical Spec · 4-spec complete</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,176 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Visual product requirements for the CyberShield AI proof of concept.">
+  <title>CyberShield AI — Product Requirements</title>
+  <style>
+    :root { color-scheme:light; --ink:#142b3a; --muted:#536875; --paper:#f2f6f5; --card:#fff; --line:#d9e4e1; --navy:#12334b; --blue:#236ea3; --cyan:#28aabd; --teal:#087d77; --teal-pale:#e4f4ef; --amber:#d99528; --amber-pale:#fff4df; --red:#ad4750; --red-pale:#f8e9e8; --shadow:0 18px 48px rgba(18,51,75,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.6 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(1120px,calc(100% - 36px)); margin:0 auto; padding:42px 0 72px; }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:25px; }
+    .eyebrow,.kicker { color:var(--teal); font-size:.75rem; font-weight:850; letter-spacing:.13em; text-transform:uppercase; }
+    .status { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border:1px solid #e5c983; border-radius:999px; background:var(--amber-pale); color:#765518; font-size:.8rem; font-weight:800; }
+    .status::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--amber); }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin-bottom:11px; font-size:clamp(2.5rem,7vw,4.5rem); line-height:1.03; letter-spacing:-.055em; }
+    .lede { max-width:740px; margin-bottom:0; color:var(--muted); font-size:clamp(1.08rem,2.3vw,1.3rem); }
+    .hero { padding:12px 0 34px; }
+    .panel { border:1px solid var(--line); border-radius:24px; background:var(--card); box-shadow:var(--shadow); }
+    .journey { padding:clamp(20px,4vw,38px); }
+    .kicker { margin-bottom:6px; }
+    h2 { margin-bottom:8px; font-size:clamp(1.45rem,3.2vw,2rem); line-height:1.2; letter-spacing:-.03em; }
+    .muted { color:var(--muted); }
+    .diagram-scroll { overflow-x:auto; margin:22px -4px 8px; padding:5px; }
+    .flow { display:block; width:100%; min-width:850px; height:auto; }
+    .flow text { font-family:inherit; }
+    .note { display:flex; gap:12px; margin-top:15px; padding:15px 17px; border-radius:14px; background:var(--teal-pale); color:#174b49; }
+    .note strong { display:block; }
+    .note p { margin:0; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:20px 0; }
+    .card { border:1px solid var(--line); border-radius:19px; background:var(--card); padding:22px; }
+    .card h3 { margin-bottom:8px; font-size:1.1rem; }
+    .card p:last-child,.card ul:last-child { margin-bottom:0; }
+    .score-card { grid-column:1/-1; }
+    .score-inputs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:15px; }
+    .score-input { padding:14px; border-radius:13px; background:#f5f8f7; }
+    .score-input b { display:block; font-size:1.16rem; }
+    .score-input.yes b { color:var(--teal); }
+    .score-input.unsure b { color:#956711; }
+    .score-input.no b { color:var(--red); }
+    .bands { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .band { padding:12px; border-radius:12px; font-weight:800; }
+    .band small { display:block; margin-top:2px; font-weight:600; }
+    .band.good { background:var(--teal-pale); color:#14645d; }
+    .band.attention { background:var(--amber-pale); color:#795813; }
+    .band.high { background:var(--red-pale); color:#8d3740; }
+    .matrix-wrap { overflow-x:auto; margin-top:13px; }
+    table { width:100%; border-collapse:collapse; font-size:.92rem; }
+    th,td { padding:11px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; }
+    .section { margin-top:35px; }
+    .section-head { max-width:780px; margin-bottom:15px; }
+    .screen-stack { display:grid; gap:11px; }
+    details { border:1px solid var(--line); border-radius:17px; background:var(--card); overflow:hidden; }
+    details[open] { box-shadow:0 12px 28px rgba(18,51,75,.055); }
+    summary { display:flex; align-items:center; justify-content:space-between; gap:14px; cursor:pointer; list-style:none; padding:17px 20px; font-weight:850; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:"+"; color:var(--muted); font-size:1.3rem; line-height:1; }
+    details[open] summary::after { content:"−"; }
+    .sum-left { display:flex; align-items:center; gap:12px; }
+    .num { display:grid; place-items:center; width:29px; height:29px; flex:0 0 29px; border-radius:50%; background:#e6f1f5; color:var(--blue); font-size:.85rem; }
+    .body { padding:0 20px 20px 61px; color:var(--muted); }
+    .body p:last-child,.body ul:last-child { margin-bottom:0; }
+    .body ul { padding-left:1.2rem; }
+    .body li+li { margin-top:6px; }
+    .criteria { margin-top:13px; padding:12px 14px; border-left:3px solid var(--teal); border-radius:0 10px 10px 0; background:#f1f8f6; color:#315751; }
+    .questions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:13px; }
+    .q { padding:13px; border:1px solid var(--line); border-radius:12px; background:#fbfdfc; }
+    .q b { display:block; color:var(--ink); }
+    .q small { color:var(--muted); }
+    .states { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .state { padding:17px; border:1px solid var(--line); border-radius:15px; background:var(--card); }
+    .state h3 { margin-bottom:6px; font-size:1rem; }
+    .state p { margin-bottom:0; color:var(--muted); font-size:.94rem; }
+    .state.error { border-color:#efc6c4; background:#fffafa; }
+    .state.success { border-color:#c1e4d8; background:#f8fcfa; }
+    .boundary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; margin-top:16px; }
+    .boundary article { padding:18px; border-radius:16px; border:1px solid var(--line); background:var(--card); }
+    .boundary h3 { margin-bottom:8px; font-size:1rem; }
+    .boundary p { margin:0; color:var(--muted); font-size:.93rem; }
+    .boundary .now { border-top:4px solid var(--teal); }
+    .boundary .later { border-top:4px solid var(--amber); }
+    .boundary .never { border-top:4px solid var(--red); }
+    footer { display:flex; justify-content:space-between; gap:16px; margin-top:38px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:.88rem; }
+    :focus-visible { outline:3px solid var(--cyan); outline-offset:3px; }
+    @media(max-width:760px) { main { width:min(100% - 24px,650px); padding-top:26px; } .grid,.questions,.states,.boundary { grid-template-columns:1fr; } .score-card { grid-column:auto; } .score-inputs,.bands { grid-template-columns:1fr; } .body { padding-left:20px; } footer { display:block; } footer span { display:block; margin-top:5px; } }
+  </style>
+</head>
+<body>
+<main>
+  <div class="topline"><span class="eyebrow">Devpost Learn · Product Requirements</span><span class="status">Approved PRD</span></div>
+  <header class="hero"><h1>CyberShield AI</h1><p class="lede">A polished, guided cybersecurity self-assessment that helps small-business owners understand their risks and choose what to improve first.</p></header>
+
+  <section class="panel journey" aria-labelledby="journey-title">
+    <p class="kicker">One complete product journey</p><h2 id="journey-title">Assess → Understand → Act</h2>
+    <p class="muted">Rules determine the score and risk priorities. AI explains the results and structures the next steps.</p>
+    <div class="diagram-scroll" tabindex="0" aria-label="Scrollable product journey diagram">
+      <svg class="flow" viewBox="0 0 1120 260" role="img" aria-labelledby="flow-title flow-desc">
+        <title id="flow-title">CyberShield AI product journey</title>
+        <desc id="flow-desc">A small business owner starts without an account, answers eight questions, receives a transparent score and impact-based risk priorities, reviews a clear dashboard, then opens an AI action plan. Predefined actions remain available if AI is unavailable.</desc>
+        <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#93a8ae"/></marker></defs>
+        <g stroke="#93a8ae" stroke-width="2" fill="none" marker-end="url(#arr)"><path d="M202 104 H224"/><path d="M414 104 H436"/><path d="M626 104 H648"/><path d="M838 104 H860"/></g>
+        <g>
+          <rect x="8" y="42" width="194" height="126" rx="18" fill="#f3f7f7" stroke="#d9e4e1"/><circle cx="38" cy="71" r="16" fill="#dcecf0"/><text x="38" y="76" text-anchor="middle" font-size="14" font-weight="800" fill="#236ea3">1</text><text x="28" y="111" font-size="16" font-weight="750" fill="#142b3a">Landing</text><text x="28" y="136" font-size="13" fill="#536875">clear value · start</text>
+          <rect x="220" y="42" width="194" height="126" rx="18" fill="#e7f3f5" stroke="#b9dde2"/><circle cx="250" cy="71" r="16" fill="#cae8ec"/><text x="250" y="76" text-anchor="middle" font-size="14" font-weight="800" fill="#087d77">2</text><text x="240" y="111" font-size="16" font-weight="750" fill="#142b3a">8 questions</text><text x="240" y="136" font-size="13" fill="#536875">guided · 3–5 minutes</text>
+          <rect x="432" y="42" width="194" height="126" rx="18" fill="#e4f4ef" stroke="#b9ded4"/><circle cx="462" cy="71" r="16" fill="#cceade"/><text x="462" y="76" text-anchor="middle" font-size="14" font-weight="800" fill="#087d77">3</text><text x="452" y="111" font-size="16" font-weight="750" fill="#142b3a">Rules score</text><text x="452" y="136" font-size="13" fill="#536875">impact-based priorities</text>
+          <rect x="644" y="42" width="194" height="126" rx="18" fill="#f3f7f7" stroke="#d9e4e1"/><circle cx="674" cy="71" r="16" fill="#dcecf0"/><text x="674" y="76" text-anchor="middle" font-size="14" font-weight="800" fill="#236ea3">4</text><text x="664" y="111" font-size="16" font-weight="750" fill="#142b3a">Dashboard</text><text x="664" y="136" font-size="13" fill="#536875">score · top risks</text>
+          <rect x="856" y="42" width="254" height="126" rx="18" fill="#12334b" stroke="#12334b"/><circle cx="886" cy="71" r="16" fill="#49bcc3"/><text x="886" y="76" text-anchor="middle" font-size="14" font-weight="800" fill="#12334b">5</text><text x="876" y="111" font-size="16" font-weight="750" fill="#fff">AI action plan</text><text x="876" y="136" font-size="13" fill="#d6e8e8">risk-linked steps · fallback</text>
+        </g>
+        <text x="560" y="207" text-anchor="middle" font-size="13" font-weight="750" fill="#536875">Owner answers → deterministic assessment → tailored explanation and action</text>
+        <rect x="344" y="222" width="432" height="27" rx="13.5" fill="#fff4df"/><text x="560" y="240" text-anchor="middle" font-size="12" font-weight="700" fill="#765518">If AI is unavailable: keep results, show predefined actions, allow retry</text>
+      </svg>
+    </div>
+    <div class="note"><span aria-hidden="true">✓</span><p><strong>Trust boundary</strong>The score describes self-reported controls, not a measured or technically verified security level. The application fixes score, severity, ranking, and risk-to-action mapping before AI is called.</p></div>
+  </section>
+
+  <section class="grid" aria-label="Scoring and status overview">
+    <article class="card score-card">
+      <p class="kicker">Self-reported security-controls score · 0–100</p><h2>Eight equal contributions</h2><p class="muted">Add each area’s points. The score reflects provided answers, not a measured or verified security level; a high score is not technical verification. The maximum is exactly 100; “Not sure” receives partial credit and creates a verification finding.</p>
+      <div class="score-inputs">
+        <div class="score-input yes"><b>Yes · 12.5</b><span>Control reported in place</span></div>
+        <div class="score-input unsure"><b>Not sure · 6.25</b><span>Uncertainty; verify the control</span></div>
+        <div class="score-input no"><b>No · 0</b><span>Confirmed gap</span></div>
+      </div>
+      <div class="bands" aria-label="Score status bands">
+        <div class="band high">0–49 · High Risk<small>Several important controls may be missing</small></div>
+        <div class="band attention">50–79 · Needs Attention<small>Meaningful gaps should be addressed</small></div>
+        <div class="band good">80–100 · Strong<small>Most important controls appear in place</small></div>
+      </div>
+    </article>
+    <article class="card">
+      <p class="kicker">Risk priority is separate</p><h3>Potential impact × answer</h3><p class="muted">High-impact areas: backups, passwords, MFA, user access. Moderate-impact areas: updates, Wi-Fi/network, devices, employee practices.</p>
+      <div class="matrix-wrap"><table><thead><tr><th>Answer</th><th>High impact</th><th>Moderate impact</th></tr></thead><tbody><tr><td>Yes</td><td colspan="2">No significant finding</td></tr><tr><td>No</td><td>High · confirmed gap</td><td>Medium · confirmed gap</td></tr><tr><td>Not sure</td><td>High · verify</td><td>Medium · verify</td></tr></tbody></table></div>
+    </article>
+  </section>
+
+  <section class="section" aria-labelledby="screens-heading">
+    <div class="section-head"><p class="kicker">Structured review</p><h2 id="screens-heading">What happens on each screen?</h2><p class="muted">Expand a step to see the behavior and the evidence that demonstrates it.</p></div>
+    <div class="screen-stack">
+      <details open><summary><span class="sum-left"><span class="num">1</span>Landing · explain the value and start</span></summary><div class="body"><p>Show the main message, 3–5-minute estimate, no-expertise promise, personalized overview and actions, the Assess → Understand → Act visual, and <strong>Start Assessment</strong>. No account/login.</p><div class="criteria"><strong>Check:</strong> a first-time owner can identify what the app does and where to begin within seconds.</div></div></details>
+      <details><summary><span class="sum-left"><span class="num">2</span>Assessment · eight guided questions</span></summary><div class="body"><p>One question at a time, with a progress count out of eight, plain language, Yes/No/Not sure choices where appropriate, short helper text, and Next/Back. The eight areas are Passwords, MFA, Backups, Updates, User Access, Network/Wi-Fi, Device Protection, and Employee Practices.</p>
+        <div class="questions">
+          <div class="q"><b>Password security</b><small>Unique passwords for business accounts?</small></div><div class="q"><b>Multi-factor authentication</b><small>Extra sign-in step on important accounts?</small></div>
+          <div class="q"><b>Backups</b><small>Important files backed up and recoverable?</small></div><div class="q"><b>Updates</b><small>Devices and software kept current?</small></div>
+          <div class="q"><b>User access</b><small>Staff access limited to what they need?</small></div><div class="q"><b>Network/Wi-Fi</b><small>Business Wi-Fi protected from unauthorized use?</small></div>
+          <div class="q"><b>Device protection</b><small>Business devices protected from compromise?</small></div><div class="q"><b>Employee practices</b><small>Employees spot and report suspicious messages?</small></div>
+        </div><div class="criteria"><strong>Check:</strong> all eight answers are required; Back preserves earlier answers; a blank is highlighted and never treated as Not sure.</div></div></details>
+      <details><summary><span class="sum-left"><span class="num">3</span>Results dashboard · show score and top risks</span></summary><div class="body"><p>Label the value “Self-reported security-controls score.” Show the exact score, status, plain-language meaning, and highest-priority findings. State that it is based on answers, not a measured or verified security level; even a high score is not technical verification. Each risk shows its area, severity, why it matters, and whether it is a confirmed gap or needs verification. Sort deterministically by priority, confirmed No before Not sure, then fixed assessment order: Password security, MFA, Backups, Updates, User Access, Network/Wi-Fi, Device Protection, Employee Practices.</p><div class="criteria"><strong>Check:</strong> the score equals the sum of eight fixed area scores; risk labels follow the matrix; the screen says results are self-reported and not a scan/audit.</div></div></details>
+      <details><summary><span class="sum-left"><span class="num">4</span>AI action plan · explain and guide, not chat</span></summary><div class="body"><p>Before the AI call, the application determines the score, findings, severity, ranking, and risk-to-action mapping. AI receives those structured results and relevant assessment answers as context, then selects approved summary and explanation styles. Django renders all displayed explanations and actions from fixed copy. From <strong>Get AI Guidance</strong>, show up to three prioritized findings with what to do, why it matters, the risk addressed, and how to get started. AI cannot create findings or change scores, priorities, ranking, or action mapping.</p><div class="criteria"><strong>Check:</strong> every remediation action points to a finding; preventive actions are labeled; the result is structured, not conversational.</div></div></details>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="states-heading">
+    <div class="section-head"><p class="kicker">What if?</p><h2 id="states-heading">Important result and error states</h2><p class="muted">Open the cards to review how the product stays useful and trustworthy in each case.</p></div>
+    <div class="states">
+      <article class="state error"><h3>Question unanswered</h3><p>Identify and highlight it with “Please answer this question to continue.” On final submit, return to the first unanswered question. No automatic Not sure.</p></article>
+      <article class="state error"><h3>AI service unavailable</h3><p>Keep the rules score and findings. Show “AI guidance is temporarily unavailable, but your security assessment is ready,” predefined risk-linked fallback actions, and a retry option.</p></article>
+      <article class="state success"><h3>Fewer than three findings</h3><p>Show only findings that exist. Extra plan entries may be preventive or verification steps, clearly labeled.</p></article>
+      <article class="state success"><h3>No significant findings</h3><p>Show a positive result based on self-reported answers; recommend maintenance/prevention without inventing a problem.</p></article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="boundary-heading">
+    <p class="kicker">Firm proof-of-concept boundary</p><h2 id="boundary-heading">Build the complete loop, not the whole platform</h2>
+    <div class="boundary">
+      <article class="now"><h3>Now · build</h3><p>Login-free landing, eight-question assessment, transparent score and priorities, polished dashboard, structured AI guidance, and reliable fallback.</p></article>
+      <article class="later"><h3>Later · consider</h3><p>A broader SaaS product after the assessment-to-action-plan value is demonstrated.</p></article>
+      <article class="never"><h3>Outside this POC</h3><p>System/network scans, full technical audits, AI scoring, generic chat, and invented findings.</p></article>
+    </div>
+  </section>
+  <footer><strong>CyberShield AI · PRD draft</strong><span>Visual companion · Markdown is canonical · Offline-ready, no framework</span></footer>
+</main>
+</body>
+</html>

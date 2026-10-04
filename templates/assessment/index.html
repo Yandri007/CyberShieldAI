@@ -1,0 +1,129 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10233f">
+  <title>CyberShield AI — practical security clarity</title>
+  <link rel="stylesheet" href="{% static 'assessment/css/app.css' %}">
+  <script src="{% static 'assessment/js/app.js' %}" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="CyberShield AI home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span>CyberShield <span class="brand-light">AI</span></span>
+    </a>
+    <div class="header-note"><span class="privacy-dot" aria-hidden="true"></span> Private self-assessment · No account needed</div>
+  </header>
+
+  <main id="main-content">
+    <section id="home" class="screen screen-home" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> Cybersecurity, made practical</p>
+        <h1 id="hero-title">Understand your business’s cybersecurity risks and know what to fix first.</h1>
+        <p class="hero-intro">Get a clear picture of your security practices and a sensible place to start—without needing a cybersecurity background.</p>
+        <div class="hero-actions">
+          <button class="button button-primary button-large" id="start-assessment" type="button">Start Assessment <span aria-hidden="true">→</span></button>
+          <span class="time-note"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.4"></circle><path d="M10 5.7v4.7l3.2 1.8"></path></svg> About 3–5 minutes</span>
+        </div>
+        <p class="hero-reassurance">Your answers are used to create this assessment and are not saved as a business profile.</p>
+      </div>
+      <div class="hero-visual" aria-label="A three-step path from assessment to action">
+        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+        <div class="visual-center"><span class="shield-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 5 39 11v11c0 10-6.7 17-15 21C15.7 39 9 32 9 22V11l15-6Z"></path><path d="m17.5 24 4.3 4.3 9-9"></path></svg></span><span>Clearer security,<br>one step at a time</span></div>
+        <div class="orbit-step step-assess"><span class="step-number">01</span><span>Assess</span></div>
+        <div class="orbit-step step-understand"><span class="step-number">02</span><span>Understand</span></div>
+        <div class="orbit-step step-act"><span class="step-number">03</span><span>Act</span></div>
+      </div>
+      <div class="feature-strip" aria-label="What you will receive">
+        <article class="feature-item"><span class="feature-icon icon-check" aria-hidden="true">✓</span><div><strong>Simple questions</strong><span>Eight everyday security areas</span></div></article>
+        <article class="feature-item"><span class="feature-icon icon-chart" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 16V9m7 7V4m7 12v-5"></path></svg></span><div><strong>Clear overview</strong><span>Understand what your answers show</span></div></article>
+        <article class="feature-item"><span class="feature-icon icon-arrow" aria-hidden="true">↗</span><div><strong>Practical priorities</strong><span>See what deserves attention first</span></div></article>
+      </div>
+    </section>
+
+    <section id="assessment" class="screen screen-assessment" aria-labelledby="assessment-title" hidden>
+      <div class="section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> Your guided assessment</p>
+        <h1 id="assessment-title" tabindex="-1">Let’s understand your security basics.</h1>
+        <p>Choose the answer that best describes your business today. “Not sure” is a useful answer too.</p>
+      </div>
+      <div class="assessment-layout">
+        <aside class="assessment-aside">
+          <div class="aside-shield"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 39 11v11c0 10-6.7 17-15 21C15.7 39 9 32 9 22V11l15-6Z"></path><path d="m17.5 24 4.3 4.3 9-9"></path></svg></div>
+          <h2>Designed for business owners</h2>
+          <p>No technical jargon. Your answers are assessed with transparent rules and stay in this temporary assessment.</p>
+          <div class="aside-progress-label"><span>Assessment progress</span><span id="progress-percent">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          <div class="progress-count" id="progress-count">Question 1 of {{ areas|length }}</div>
+        </aside>
+        <div class="question-card" aria-live="polite">
+          <div class="card-topline"><span class="question-area" id="question-area"></span><span class="question-step" id="question-step"></span></div>
+          {% for area in areas %}
+          <fieldset class="question-panel" data-question-id="{{ area.id }}" data-name="{{ area.name }}" data-group="{{ area.group }}" data-question="{{ area.question }}" data-helper="{{ area.helper }}" {% if not forloop.first %}hidden{% endif %}>
+            <legend class="question-title">{{ area.question }}</legend>
+            <p class="question-helper">{{ area.helper }}</p>
+            <div class="answer-options" role="radiogroup" aria-label="Answer for {{ area.name }}">
+              <label class="answer-option"><input type="radio" name="answer-{{ area.id }}" value="yes" aria-describedby="error-{{ area.id }}"><span class="radio-visual" aria-hidden="true"></span><span class="answer-copy"><strong>Yes</strong><small>This is in place for our business.</small></span></label>
+              <label class="answer-option"><input type="radio" name="answer-{{ area.id }}" value="no" aria-describedby="error-{{ area.id }}"><span class="radio-visual" aria-hidden="true"></span><span class="answer-copy"><strong>No</strong><small>This is not in place right now.</small></span></label>
+              <label class="answer-option"><input type="radio" name="answer-{{ area.id }}" value="not_sure" aria-describedby="error-{{ area.id }}"><span class="radio-visual" aria-hidden="true"></span><span class="answer-copy"><strong>Not sure</strong><small>I need to check or confirm this.</small></span></label>
+            </div>
+            <p class="field-error" id="error-{{ area.id }}" role="alert" hidden>Please answer this question to continue.</p>
+          </fieldset>
+          {% endfor %}
+          <div class="question-actions">
+            <button class="button button-back" id="back-button" type="button" disabled><span aria-hidden="true">←</span> Back</button>
+            <button class="button button-primary" id="next-button" type="button">Next <span aria-hidden="true">→</span></button>
+            <button class="button button-primary" id="analyze-button" type="button" hidden>Analyze My Security <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="secure-note"><span aria-hidden="true">●</span> Your answers are held temporarily while you complete this assessment.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="screen screen-results" aria-labelledby="results-title" hidden>
+      <div class="results-heading">
+        <div><p class="eyebrow"><span class="eyebrow-line"></span> Your assessment overview</p><h1 id="results-title" tabindex="-1">Here’s what your answers show.</h1><p class="results-lead">A clear starting point for strengthening your everyday security practices.</p></div>
+        <button class="text-button" id="retake-assessment" type="button"><span aria-hidden="true">↻</span> Start over</button>
+      </div>
+      <div class="score-panel">
+        <div class="score-visual" id="score-visual">
+          <div class="score-ring"><div class="score-ring-inner"><strong id="score-value">—</strong><span>out of 100</span></div></div>
+        </div>
+        <div class="score-summary"><span class="score-kicker">Your self-reported posture</span><div class="status-line"><span class="status-dot" id="status-dot"></span><h2 id="status-label">—</h2></div><p id="status-description"></p><p class="score-meaning"><strong>What this score means:</strong> it reflects the controls you reported in this self-assessment. CyberShield AI has not scanned or technically verified your systems.</p></div>
+        <div class="score-stat"><span class="stat-icon" aria-hidden="true">✓</span><strong id="finding-count">0</strong><span>areas to review</span></div>
+      </div>
+      <details class="score-method"><summary>How this score is calculated</summary><div class="score-method-copy"><p>Each of the eight areas contributes equally to your self-reported score:</p><div class="score-points"><span><strong>Yes</strong><b>12.5 points</b></span><span><strong>Not sure</strong><b>6.25 points</b></span><span><strong>No</strong><b>0 points</b></span></div><p><strong>Not sure</strong> gives partial credit and creates a finding that needs verification. Your status is Strong at 80–100, Needs Attention at 50–79, and High Risk at 0–49. Finding priorities are ranked separately by potential impact.</p></div></details>
+      <div class="results-grid">
+        <section class="risks-section" aria-labelledby="risks-title">
+          <div class="content-heading"><div><p class="eyebrow">Your priorities</p><h2 id="risks-title">What to look at first</h2></div><span class="section-count" id="risk-count"></span></div>
+          <p class="section-intro" id="risk-intro"></p>
+          <div class="risk-list" id="risk-list"></div>
+          <section class="other-risks" id="other-risks" aria-labelledby="other-risks-title" hidden><h3 id="other-risks-title">Other findings from your answers</h3><div id="other-risk-list"></div></section>
+          <div class="positive-note" id="positive-note" hidden><span class="positive-icon" aria-hidden="true">✓</span><div><strong>No significant gaps identified</strong><p>Based on your self-reported answers, no significant gaps were identified in this assessment. Keep checking that these practices remain in place.</p></div></div>
+          <p class="no-more-risks" id="no-more-risks" hidden>No additional significant risks were identified from your answers.</p>
+        </section>
+        <aside class="area-summary" aria-labelledby="areas-title"><div class="content-heading"><div><p class="eyebrow">At a glance</p><h2 id="areas-title">All eight areas</h2></div></div><div id="area-list" class="area-list"></div></aside>
+      </div>
+      <section class="guidance-entry" id="guidance-entry" aria-label="Continue to your action plan">
+        <div><p class="eyebrow">Turn clarity into action</p><h2>Ready for a practical next step?</h2><p>Your action plan connects each recommendation to the findings from your answers.</p><p class="ai-data-note">If AI guidance is configured, your eight categorical answers and assessment results are sent to OpenAI for explanations. No name or free-text answers are sent. OpenAI may retain API content in abuse-monitoring logs for up to 30 days. <a href="https://developers.openai.com/api/docs/guides/your-data" target="_blank" rel="noopener noreferrer">Learn about API data handling</a>.</p></div>
+        <button class="button button-primary" id="get-guidance" type="button">Get AI Guidance <span aria-hidden="true">→</span></button>
+      </section>
+      <section class="guidance-plan" id="guidance-plan" aria-labelledby="guidance-title" hidden>
+        <div class="guidance-plan-heading"><div><p class="eyebrow">Your next steps</p><h2 id="guidance-title" tabindex="-1">Your prioritized action plan</h2><p id="guidance-summary" class="guidance-summary"></p></div><span class="plan-mode" id="plan-mode">Rules-based plan</span></div>
+        <div class="guidance-notice" id="guidance-notice"><span class="info-icon" aria-hidden="true">i</span><p id="guidance-notice-text"></p></div>
+        <div class="plan-list" id="plan-list"></div>
+        <div class="guidance-actions"><p id="plan-footer"></p><button class="button button-secondary" id="retry-guidance" type="button" hidden>Retry AI Guidance <span aria-hidden="true">↻</span></button></div>
+      </section>
+      <div class="results-footnote"><span class="info-icon" aria-hidden="true">i</span><p>Your score is a transparent summary of the answers you provided. A higher score reflects more controls reported in place; it is not a technical security audit.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>CyberShield AI</span><span>Practical security clarity for small businesses</span></footer>
+
+  <form id="csrf-form" hidden>{% csrf_token %}</form>
+  <script id="assessment-config" type="application/json">{"analyzeUrl":"{{ analyze_url }}","guidanceUrl":"/api/assessment/guidance/","questionCount":{{ areas|length }}}</script>
+</body>
+</html>
